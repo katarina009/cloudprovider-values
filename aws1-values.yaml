@@ -1,0 +1,189 @@
+devMode:
+  enabled: true
+editMode:
+  enabled: true
+
+datafiles:
+  mongodb:
+    enabled: false
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "datafiles"
+    existingClaim: aws1-efs-vol-1    
+
+engine:
+  replicaCount: 1
+  acceptEULA: "yes"
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "engine-apps"
+    existingClaim: aws1-efs-vol-1
+
+edge-auth:
+  oidc:
+    enabled: false
+
+identity-providers:
+  secrets:
+    idpConfigs:
+      - discoveryUrl: "https://dev-110383.oktapreview.com/.well-known/openid-configuration"
+        primary: true
+        clientId: "0oafj6yfxcohpnr7d0h7"
+        clientSecret: "MDLjgksXlvXODXMeovOnuifpDj4p8OqDvkUjW4_q"
+        realm: "OKTA"
+        scope: "openid profile groups email"
+        hostname: "aws1.qlikk8s.io"
+        claimsMapping:
+          sub: ["email"]
+      - discoveryUrl: "https://dev-110383.oktapreview.com/oauth2/ausfgdtxjcJYGfu740h7/.well-known/openid-configuration"
+        primary: false
+        clientId: "not needed"
+        clientSecret: "not needed"
+        realm: "OKTA"
+        hostname: "aws1.qlikk8s.io"
+        claimsMapping:
+          sub: ["client_id", "cid"]
+
+elastic-infra:
+  nginx-ingress:
+    controller:
+      replicaCount: 1
+      publishService:
+        enabled: true
+      extraArgs:
+        default-ssl-certificate: "default/nginx-ingress-tls"
+      service:
+        annotations:
+          service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '3600'
+          service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+      config:
+        use-proxy-protocol: "true"
+        ssl-redirect: "true"
+
+mira:
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+
+resource-library:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "resource-library"
+    existingClaim: aws1-efs-vol-1
+
+redis:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "redis" 
+    existingClaim: aws1-efs-vol-1
+
+reporting:
+ persistence:
+  enabled: true
+  accessMode: ReadWriteMany
+  storageClass: "reporting-service"
+  existingClaim: aws1-efs-vol-1
+
+qix-data-connection:
+  datafiles:
+    enabled: true
+  mongodb:
+    enabled: false
+
+feature-flags:
+  configmaps:
+    create: true
+    featureFlagsConfig:
+      {
+        "globalFeatures": {
+          "gaEnabled": true,
+          "rollbarEnabled": true,
+          "qlikmetricsEnabled": true,
+          "HIDE_ABOUT_BUTTON": false,
+          "CLOUD_THEMES": true,
+          "CLOUD_EXTENSIONS": true,
+          "CLOUD_SHARING_SERVICE": true,
+          "CLOUD_SHARING_SERVICE_SNAPSHOT": false,
+          "CLOUD_SHARING_SERVICE_OTHER": false,
+          "REMOTE_CONFIG_ENABLED": true,
+          "DISABLE_ONPREM_EXTENSIONS": true,
+          "DISABLE_ONPREM_THEMES": true,
+          "DOWNLOAD_USE_REPORTING": true,
+          "CLIENT_METRICS": true,
+          "AUDIT_API_ENABLED": true,
+          "AUDIT_API_QUERY_ENABLED": true,
+          "AUDIT_SUBSCRIPTION_ENABLED": true,
+          "DROP_ZONES": true,
+          "MANAGEMENT_CONSOLE_ENABLED": true,
+          "MANAGEMENT_CONSOLE_METRICS_ENABLED": true,
+          "MANAGEMENT_CONSOLE_BASIC_AUDIT": true,
+          "MANAGEMENT_CONSOLE_AUDIT_USERMAP_ENABLED": true,
+          "MANAGEMENT_CONSOLE_RESOURCE_MANAGEMENT_ENABLED": true,
+          "MANAGEMENT_CONSOLE_RESOURCE_MANAGEMENT_EDIT_ENABLED": true,
+          "MANAGEMENT_CONSOLE_USER_MANAGEMENT_ENABLED": true,
+          "preview-privileges": true,
+          "SINGLE_SELECT": true,
+          "DASHBOARD_EXT_BUNDLE": true,
+          "SHARE_BUTTON_EXTENSION": true,
+          "SINGLE_CONFIG": true,
+          "MLREST": true,
+          "ELASTIC_DND": true,
+          "GEO_BACKGROUND_WMS": true,
+          "GEO_BACKGROUND_IMAGE": true,
+          "GEO_SIZE_LEGEND": true,
+          "REBRAND2018": true,
+          "VIZ_EXT_BUNDLE": true,
+          "SHARED_SPACES_API_ENABLED": false,
+          "SSA_IN_EDIT": true,
+          "rest": true,
+          "TwitterConnector": true,
+          "SurveyMonkeyConnector": true,
+          "BitlyConnector": true,
+          "MailChimpConnectorV2": true,
+          "AYLIEN_NewsConnector": true,
+          "AYLIEN_SentimentConnector": true,
+          "GoogleAdSenseConnector": true,
+          "mssql": true,
+          "gbq": true,
+          "redshift": true,
+          "ALLOW_OPEN_HUB_IN_SAME_TAB": true,
+          "createAndReloadEnabled": true,
+          "SPA": true,
+          "autoAssignEnabled": true,
+          "SELECTION_INSIGHTS": true,
+          "analyzerEnabled": true,
+          "FacebookFanPagesConnector": true,
+          "FacebookInsightsConnector": true,
+          "GoogleAdWordsConnector": true,
+          "GoogleAnalyticsConnector": true,
+          "GoogleCalendarConnector": true,
+          "GoogleSearchConsoleConnector": true,
+          "JIRAConnector": true,
+          "StravaConnector": true,
+          "SugarCRMConnector": true,
+          "MailboxIMAPConnector": true,
+          "MailboxPOP3Connector": true,
+          "SlackConnector": true,
+          "SMTPConnector": true,
+          "TextAnalyser_RepustateConnector": true,
+          "TextAnalyser_Sentiment140Connector": true,
+          "TextAnalyser_WatsonConnector": true,
+          "YouTubeConnector": true,
+          "GitHubConnector": true,
+          "TextAnalyser_MeaningCloudConnector": true,
+          "YouTubeAnalyticsConnector": true,
+          "azure_sql": true,
+          "apache-hive": true,
+          "impala": true,
+          "mysql": true,
+          "VIZBUN_QCS_31": true,
+          "AOSHARE": true
+        },
+        "userFeatures": {}
+      }
+
