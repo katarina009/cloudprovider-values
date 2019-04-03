@@ -1,0 +1,252 @@
+devMode:
+  enabled: true
+editMode:
+  enabled: true
+
+datafiles:
+  mongodb:
+    enabled: false
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "datafiles"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
+#mongodb:
+#  uri: mongodb://qsefe-mongodb:27017/qsefe
+
+#devMode:
+#  enabled: false
+
+## engine contains the configurations for the Qlik Sense Engine
+engine:
+  replicaCount: 1
+  acceptEULA: "yes"
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany ## This is required for the engine to have multiple replicas
+    storageClass: "engine-apps"
+    internalStorageClass:
+      enabled: true
+
+      definition:
+        provisioner: qlik.com/nfs
+
+edge-auth:
+  oidc:
+    enabled: false
+
+identity-providers:
+  secrets:
+    create: true
+    idpConfigs:
+      - issuerConfig:
+          issuer: "https://adfs.qlikk8s.io/adfs"
+          authorization_endpoint: "https://adfs.qlikk8s.io/adfs/oauth2/authorize/"
+          end_session_endpoint: "https://adfs.qlikk8s.io/adfs/oauth2/logout"
+          jwks_uri: "https://adfs.qlikk8s.io/adfs/discovery/keys"
+          token_endpoint: "https://adfs.qlikk8s.io/adfs/oauth2/token/"
+          userinfo_endpoint: "https://adfs.qlikk8s.io/adfs/userinfo"
+        audience: "urn:microsoft:userinfo"
+        clientId: "972e21ff-4664-4343-9529-5aae3b51b513"
+        clientSecret: "0y8D3BobxoUrB3ZhCgagQknGxhqU7YNfvTBCiRAT"
+        realm: "ADFS"
+        hostname: "efedoc.qlikk8s.io"
+        useClaimsFromIdToken: true
+        claimsMapping:
+          sub: ["sub", "appid"]
+          client_id: "appid"
+          name: "unique_name"
+      - issuerConfig:
+          issuer: "https://qlik.b6c113f2-5fd4-499a-9883-1224030224b1"
+        primary: false
+        realm: custom
+        hostname: "efedoc.qlikk8s.io"
+        staticKeys:
+          - kid: "qlik-b6c113f2-5fd4-499a-9883-1224030224b1"
+            pem: |
+              -----BEGIN CERTIFICATE-----
+              MIIFnDCCBISgAwIBAgIQAPHalDwvuk3W4PkFjxCW8TANBgkqhkiG9w0BAQsFADAv
+              MS0wKwYDVQQDDCRyZC1xc2VzdGFnZTEwLnJkbHVuZC5xbGlrdGVjaC5jb20tQ0Ew
+              HhcNMTgwOTA1MDYwOTQxWhcNMjgwOTEyMDYwOTQxWjAsMSowKAYDVQQDDCFyZC1x
+              c2VzdGFnZTEwLnJkbHVuZC5xbGlrdGVjaC5jb20wggEiMA0GCSqGSIb3DQEBAQUA
+              A4IBDwAwggEKAoIBAQCCvWcNTe2KZEb4yvvjHnuRwPDXc5pzj+ltbrJ9i3ANAnr+
+              FeOESFcDYSrPM+tNr0PXlcvAjMTxqFaad4G3qRaBLs0rShseOJt3VlQrHj0lXPuR
+              6i7VwpksSs2cpIvKsrKnEx1WfFGZb38MKrfOc1aVtGYFK1Ub01LI4dm2CS+OaEHj
+              RAkJYGPbr6UHO2fKg4B28Xf6MA1R1xfUdd8B4wm/4dIwYT7nEbTy7CldWXDxa+OX
+              vcsflyuSP007GnyFeRwi2Z5v1VvKKbpzhPH9VP0J4ZO/g15ghgkGlECR9uLQMnvS
+              XRNm40t8HeGknl0VtAGgKQ3zHr0OuaRmEmPLlo+XAgMBAAGjggK1MIICsTAsBgNV
+              HREEJTAjgiFyZC1xc2VzdGFnZTEwLnJkbHVuZC5xbGlrdGVjaC5jb20wHQYDVR0O
+              BBYEFEMMeGSZDJMcdXmgTO9J4fNW0gY9MB8GA1UdIwQYMBaAFCiAeEI3Qm1TkuUg
+              zfBucszIitUbMBUGCCsGAQUFBw0DBAkEB1NlcnZpY2UwggESBggrBgEFBQcNAQSC
+              AQQEggEAZPRYEoAlDZ1em/CDgTGfPVivyNYtny0yjoYSvcEKQM33oh2E52Wg/5JA
+              wqC7UbKiKv31bZgChJoxa6sipIzezbyAMlcmB3zo4nmVGN5T9+id6eRsB9gM18Qj
+              AurCDSnr+oNHm29ejaXwC4PsN81e2QStyumk9ZRkg6REdzUWUoJn/uRhjJpUtgOj
+              qRZt0zX+fv+3jWHH8cVsP2r+1zk2+w2zFD1D8QAOuapREW8zWTM+wOP515S1aWuW
+              2TzmNzdHfQ28glC9/zf1AiIKujhFbsStG6Gj8fnVBUt70xjgey64QrZM6jb6m9Ip
+              twvQeS/Wgf+1DhEX4ZUsYZD4JHWn0DCCARIGCCsGAQUFBw0CBIIBBASCAQAtlMxO
+              Ieh7jFQG37Sy6eYiA+endPZZggmxgG2BbA3tU495WM+d3cyB8aXvYwwnOvpyN+Sj
+              nFLhwUw71KlHrtH7V8PaC6WCGpN+TfRkmfd6bJ3LvSycOcFmYGT/F7k1lHzLDURi
+              dzVx4VxjOYDvRIjlds6BxxTGexLxLjvFlhKwya5ncLUGok4AGnwfdXHkoTsC7DZT
+              NZRFw7btIPdyrkBH6tyaDgL0tqLp1GL8W3NhxzwwQNcjANcQGnFnY+HEPZk7Z+ei
+              9cW6M41V/j14ZX730AA/PqDwvFynpwSuFYT1kAqUCiMZvS+ftBLdD9ww6cggLCFm
+              z4lNhjL1OJkAUICwMA0GCSqGSIb3DQEBCwUAA4IBAQCF9klYebm1XsE8vKddfDVt
+              HksY/JozwVdrihPTiT08RZhw7zf2y07qhzNxEKim8KRrcnYF4Xey16P2Xfq4zq6W
+              iiTVR1j6ylvzeyaQVOKYAo5DoED1ntEYciNmKweoRloKO6KXqBdruFeufznPSs8M
+              EbrweTASBmfm/9ncylE7K9E/YPcmOeKirYWWYaoEDsuRv06AVsIjGKUgDvipsJ5x
+              kvp6d0wp+2STenK5IEeplhdeIst4jnYpP/ptKW3Om9uafuyDclilu3GSwPY+Zdi8
+              NPa68rPJOQ4eROqQXUaAcdXGip+2nZdfO1kPJZaNqdJx1tutGdVSHCeaSZtCf5Wm
+              -----END CERTIFICATE-----
+ 
+elastic-infra:
+  nginx-ingress:
+    controller:
+      replicaCount: 1
+      publishService:
+        enabled: true
+      extraArgs:
+        default-ssl-certificate: "default/nginx-ingress-tls"
+      # service:
+        # annotations:
+      config:
+        #use-proxy-protocol: "true"
+        ssl-redirect: "true"
+
+mira:
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+
+resource-library:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "resource-library"
+    internalStorageClass:
+      enabled: true
+
+      definition:
+        provisioner: qlik.com/nfs
+
+reporting:
+ persistence:
+  enabled: true
+  accessMode: ReadWriteMany
+  storageClass: "reporting-service"
+  internalStorageClass:
+    enabled: true
+    definition:
+      provisioner: qlik.com/nfs
+
+qix-data-connection:
+  datafiles:
+    enabled: true
+  mongodb:
+    enabled: false
+
+qix-datafiles:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "qix-datafiles"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
+feature-flags:
+  configmaps:
+    create: true
+    featureFlagsConfig:
+      {
+        "globalFeatures": {
+          "gaEnabled": true,
+          "rollbarEnabled": true,
+          "qlikmetricsEnabled": true,
+          "HIDE_ABOUT_BUTTON": false,
+          "CLOUD_THEMES": true,
+          "CLOUD_EXTENSIONS": true,
+          "CLOUD_SHARING_SERVICE": true,
+          "CLOUD_SHARING_SERVICE_SNAPSHOT": false,
+          "CLOUD_SHARING_SERVICE_OTHER": false,
+          "REMOTE_CONFIG_ENABLED": true,
+          "DISABLE_ONPREM_EXTENSIONS": true,
+          "DISABLE_ONPREM_THEMES": true,
+          "DOWNLOAD_USE_REPORTING": true,
+          "CLIENT_METRICS": true,
+          "AUDIT_API_ENABLED": true,
+          "AUDIT_API_QUERY_ENABLED": true,
+          "AUDIT_SUBSCRIPTION_ENABLED": true,
+          "DROP_ZONES": true,
+          "MANAGEMENT_CONSOLE_ENABLED": true,
+          "MANAGEMENT_CONSOLE_METRICS_ENABLED": true,
+          "MANAGEMENT_CONSOLE_BASIC_AUDIT": true,
+          "MANAGEMENT_CONSOLE_AUDIT_USERMAP_ENABLED": true,
+          "MANAGEMENT_CONSOLE_RESOURCE_MANAGEMENT_ENABLED": true,
+          "MANAGEMENT_CONSOLE_RESOURCE_MANAGEMENT_EDIT_ENABLED": true,
+          "MANAGEMENT_CONSOLE_USER_MANAGEMENT_ENABLED": true,
+          "preview-privileges": true,
+          "SINGLE_SELECT": true,
+          "DASHBOARD_EXT_BUNDLE": true,
+          "SHARE_BUTTON_EXTENSION": true,
+          "SINGLE_CONFIG": true,
+          "MLREST": true,
+          "ELASTIC_DND": true,
+          "GEO_BACKGROUND_WMS": true,
+          "GEO_BACKGROUND_IMAGE": true,
+          "GEO_SIZE_LEGEND": true,
+          "REBRAND2018": true,
+          "VIZ_EXT_BUNDLE": true,
+          "SHARED_SPACES_API_ENABLED": false,
+          "SSA_IN_EDIT": true,
+          "rest": true,
+          "TwitterConnector": true,
+          "SurveyMonkeyConnector": true,
+          "BitlyConnector": true,
+          "MailChimpConnectorV2": true,
+          "AYLIEN_NewsConnector": true,
+          "AYLIEN_SentimentConnector": true,
+          "GoogleAdSenseConnector": true,
+          "mssql": true,
+          "gbq": true,
+          "redshift": true,
+          "ALLOW_OPEN_HUB_IN_SAME_TAB": true,
+          "createAndReloadEnabled": true,
+          "SPA": true,
+          "autoAssignEnabled": true,
+          "SELECTION_INSIGHTS": true,
+          "analyzerEnabled": true,
+          "FacebookFanPagesConnector": true,
+          "FacebookInsightsConnector": true,
+          "GoogleAdWordsConnector": true,
+          "GoogleAnalyticsConnector": true,
+          "GoogleCalendarConnector": true,
+          "GoogleSearchConsoleConnector": true,
+          "JIRAConnector": true,
+          "StravaConnector": true,
+          "SugarCRMConnector": true,
+          "MailboxIMAPConnector": true,
+          "MailboxPOP3Connector": true,
+          "SlackConnector": true,
+          "SMTPConnector": true,
+          "TextAnalyser_RepustateConnector": true,
+          "TextAnalyser_Sentiment140Connector": true,
+          "TextAnalyser_WatsonConnector": true,
+          "YouTubeConnector": true,
+          "GitHubConnector": true,
+          "TextAnalyser_MeaningCloudConnector": true,
+          "YouTubeAnalyticsConnector": true,
+          "azure_sql": true,
+          "apache-hive": true,
+          "impala": true,
+          "mysql": true,
+          "VIZBUN_QCS_31": true,
+          "AOSHARE": true
+        },
+        "userFeatures": {}
+      }
+
