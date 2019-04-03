@@ -141,6 +141,16 @@ qix-data-connection:
   mongodb:
     enabled: false
 
+qix-datafiles:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "qix-datafiles"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
 feature-flags:
   configmaps:
     create: true

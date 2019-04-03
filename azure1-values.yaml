@@ -111,6 +111,16 @@ qix-data-connection:
   mongodb:
     enabled: false
 
+qix-datafiles:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "qix-datafiles"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: kubernetes.io/azure-file
+
 feature-flags:
   configmaps:
     create: true
