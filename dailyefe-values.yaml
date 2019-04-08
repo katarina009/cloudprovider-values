@@ -1,0 +1,121 @@
+devMode:
+  enabled: true
+
+datafiles:
+  mongodb:
+    enabled: false
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "datafiles"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
+engine:
+  replicaCount: 1
+  acceptEULA: "yes"
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "engine-apps"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
+edge-auth:
+  oidc:
+    enabled: false
+
+identity-providers:
+  secrets:
+    idpConfigs:
+      - discoveryUrl: "https://qlik.okta.com/.well-known/openid-configuration"
+        primary: true
+        clientId: "0oalx3u8qu3DgArO10x7"
+        clientSecret: "ah-sV65d_U_FpNA_Qfvo4swzpfS5VpRat21zK361"
+        realm: "QTSEL"
+        scope: "openid profile groups email"
+        hostname: "dailyefe.qlikk8s.io"
+        claimsMapping:
+          sub: ["email"]
+      - discoveryUrl: "https://qlik.okta.com/oauth2/ausk8vi9omybDd89j0x7/.well-known/openid-configuration"
+        primary: false
+        clientId: "not needed"
+        clientSecret: "not needed"
+        realm: "QTSEL"
+        hostname: "dailyefe.qlikk8s.io"
+        claimsMapping:
+          sub: ["client_id", "cid"]
+ 
+elastic-infra:
+  nginx-ingress:
+    controller:
+      replicaCount: 1
+      publishService:
+        enabled: true
+      extraArgs:
+        default-ssl-certificate: "default/nginx-ingress-tls"
+      config:
+        ssl-redirect: "true"
+
+mira:
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+
+reporting:
+#  qixSessionsURL: "ws://qsefe-qix-sessions:8080"
+ persistence:
+  enabled: true
+  accessMode: ReadWriteMany
+  storageClass: "reporting-service"
+  internalStorageClass:
+    enabled: true
+    definition:
+      provisioner: qlik.com/nfs
+
+resource-library:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "resource-library"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
+qix-data-connection:
+  datafiles:
+    enabled: true
+  mongodb:
+    enabled: false
+
+qix-datafiles:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "qix-datafiles"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
+qix-sessions:
+  config:
+    kubernetesController:
+      enabled: true
+
+temporary-contents:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: "temporary-contents"
+    internalStorageClass:
+      enabled: true
+      definition:
+        provisioner: qlik.com/nfs
+
