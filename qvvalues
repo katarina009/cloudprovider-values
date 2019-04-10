@@ -1,0 +1,32 @@
+
+      - issuerConfig:
+          issuer: "https://qlik.278864c0-3491-4945-83c9-377d83f435c6"
+        primary: false
+        realm: custom
+        hostname: "qlikview.qlikk8s.io"
+        staticKeys:
+          - kid: "qlik-278864c0-3491-4945-83c9-377d83f435c6"
+            pem: |
+              -----BEGIN CERTIFICATE-----
+              MIIDQzCCAiugAwIBAgIQAPduT/1+IrZDso/JK++/5zANBgkqhkiG9w0BAQsFADAU
+              MRIwEAYDVQQDDAlRVkNsb3VkQ0EwHhcNMTkwMzI4MDkwODI5WhcNMjkwNDA0MDkw
+              ODI5WjAUMRIwEAYDVQQDDAlRVkNsb3VkQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+              DwAwggEKAoIBAQCfvK6uRIUt/buQZtFNKUKYO1AWNjO6RKhGwwveKuql9CdXxIPE
+              ay4WmHXLwt1ZxfsnNWOthtwHOudlQepyejwhuh9/8neAAhViejDoFEEGCljRpfaj
+              op5k95L9zoeSes/oK8Vg+CVAFa2YtTN9WH6EsnETThN1BuHir2C20p+OyJc0mJ4X
+              9Z2qMlpfKpf11d0+DKN2ofMIQxxnsXff4bILf7f4Ye6rawjwYwW/sLzhdym+7BGh
+              +o2SeiWv6LKruvmGq8DeMpjzkO8Bi+pqT3n47PyklAOYNUc4nidQZaaDKr8IsI5A
+              jKJcCt9w3W77g/MMkoHeFD0KN4rqMsb50xFzAgMBAAGjgZAwgY0wHQYDVR0OBBYE
+              FPs4VBMTfzIhCKlYYdA96Aim/qaTMB8GA1UdIwQYMBaAFPs4VBMTfzIhCKlYYdA9
+              6Aim/qaTMBcGCCsGAQUFBw0KBAsECVFWQ2xvdWRDQTAyBggrBgEFBQcNCwQmBCRk
+              MWY1MTJlOC1iZTg3LTQ5MWYtYWI3ZS04Njc5OWQ1ZjIxZjMwDQYJKoZIhvcNAQEL
+              BQADggEBAI+L3Cb0Uqelox9pqwGAGPSCJJPGA7S0YFwV11oqxK/d1VfgPR6IbFfl
+              MANwAJF/3ydDdoJzWGRjdQDAjVPuT8nstMF+fmLEYDQXL/gAIGInKe7KmFh/t+RI
+              QbV5C9cYi+XgHGWtQ4d+Fxmf3aCKf86T5b5L0ihri6b+M6BYTIOvNmUSigY4qzVC
+              NU5abVhMgmKZ7KNvgJ+3jY0Gg/KVoYGUhbdLRpEXZH1Ilmg9nWLHZwEpWCIR+jA8
+              CgzCvZ9F22Hns2rNzHZnniMYhamZtBzX70bClz49maR/muUmB6xLOFbYPBrIi7RC
+              mCVEHhdH3AGiurccrj7HqRocOwbycEc=
+              -----END CERTIFICATE-----
+
+
+
